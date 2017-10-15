@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">Place Picker Marker Map</string>
+    <string name="app_author">G.E. Eidsness</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_marker_map">Marker Map</string>
+    <string name="action_google_places_map">Google Places Map</string>
+    <string name="action_list">List Items</string>
+    <string name="action_edit">Edit</string>
+    <string name="action_quit">Quit</string>
+    <string name="btnLocation">Launch Place Picker</string>
+    <string name="btnExit"> Exit </string>
+    <string name="btnEdit"> Edit </string>
+    <string name="btnUpdate"> Update </string>
+    <string name="btnSave"> Save </string>
+    <string name="btnDelete"> Delete </string>
+    <string name="txtEditLocation">Edit Location </string>
+    <string name="txtLocation">Location</string>
+    <string name="txtName">Name</string>
+    <string name="txtAddress">Address</string>
+    <string name="txtRemarks">Remarks</string>
+    <string name="txtDefault">N/A</string>
+    <string name="txtEditInfo">"Click Marker Info Window to edit location"</string>
+    <string name="txtException">Got an exception : </string>
+    <string name="google_api_key">your_google_api_key</string>
+    <string name="editHint">Type note here</string>
+    <integer name="charCount">24</integer>
+</resources>
