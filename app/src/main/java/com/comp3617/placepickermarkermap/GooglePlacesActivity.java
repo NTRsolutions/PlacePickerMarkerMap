@@ -23,7 +23,7 @@ import com.google.android.gms.maps.model.LatLngBounds;
  * Date: Nov. 26, 2016 Time: 10:34:43 PM
  * Author: G.E. Eidsness
  * <p/>
- * Allows the user to select locations using GPS
+ * Allows the user to select locations using Google Places API
  */
 
 public class GooglePlacesActivity extends GoogleApiClientActivity implements View.OnClickListener {
