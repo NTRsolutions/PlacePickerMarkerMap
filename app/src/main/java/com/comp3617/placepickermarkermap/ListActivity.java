@@ -2,6 +2,8 @@ package com.comp3617.placepickermarkermap;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -17,7 +19,7 @@ import java.util.List;
 /**
  * FinalProject : com.comp3617.placepickermarkermap
  * File: ListActivity.java
- * Created by G.E. Eidsness on 04/30/2017
+ * Modified by G.E. Eidsness on 10/15/2017
  */
 
 public class ListActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
@@ -26,10 +28,39 @@ public class ListActivity extends AppCompatActivity implements AdapterView.OnIte
     private static final int REQUEST_CODE = 100;
     private ListView lvLocations;
 
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.navigation_home:
+                    //mTextMessage.setText(R.string.title_home);
+                    Toast.makeText(ListActivity.this, String.format("Clicked %s", R.string.title_home), Toast.LENGTH_SHORT).show();
+                    return true;
+                case R.id.navigation_dashboard:
+                    //mTextMessage.setText(R.string.title_dashboard);
+                    Toast.makeText(ListActivity.this, String.format("Clicked %s", R.string.title_dashboard), Toast.LENGTH_SHORT)
+                            .show();
+                    return true;
+                case R.id.navigation_notifications:
+                    //mTextMessage.setText(R.string.title_notifications);
+                    Toast.makeText(ListActivity.this, String.format("Clicked %s", R.string.title_notifications), Toast.LENGTH_SHORT)
+                            .show();
+                    return true;
+            }
+            return false;
+        }
+
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
+
+        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         LocationDBHelper locationDBHelper = LocationDBHelper.getInstance(getApplicationContext());
         LocationAdapter locationAdapter = new LocationAdapter(ListActivity.this, locationDBHelper.getLocations());
@@ -111,10 +142,10 @@ public class ListActivity extends AppCompatActivity implements AdapterView.OnIte
                 startActivity(intent);
                 ListActivity.this.finish();
                 return true;
-            case R.id.action_quit:
-                int pid = android.os.Process.myPid();
-                android.os.Process.killProcess(pid);
-                System.exit(0);
+//            case R.id.action_quit:
+//                int pid = android.os.Process.myPid();
+//                android.os.Process.killProcess(pid);
+//                System.exit(0);
             default:
                 return super.onOptionsItemSelected(item);
         }

@@ -2,6 +2,8 @@ package com.comp3617.placepickermarkermap;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AlertDialog;
 import android.os.Bundle;
 import android.text.Editable;
@@ -47,6 +49,9 @@ public class EditActivity extends GoogleApiClientActivity implements View.OnClic
         super.onCreate(savedInstanceState);
         setTitle("Modify Record");
         setContentView(R.layout.activity_edit);
+
+        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         mName = (TextView) findViewById(R.id.textView);
         mAddress = (TextView) findViewById(R.id.textView2);
@@ -124,6 +129,35 @@ public class EditActivity extends GoogleApiClientActivity implements View.OnClic
                 break;
         }
     }
+
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.navigation_home:
+                    //mTextMessage.setText(R.string.title_home);
+                    Toast.makeText(EditActivity.this, String.format("Clicked %s", R.string.title_home), Toast
+                            .LENGTH_SHORT).show();
+                    return true;
+                case R.id.navigation_dashboard:
+                    //mTextMessage.setText(R.string.title_dashboard);
+                    Toast.makeText(EditActivity.this, String.format("Clicked %s", R.string.title_dashboard), Toast
+                            .LENGTH_SHORT)
+                            .show();
+                    return true;
+                case R.id.navigation_notifications:
+                    //mTextMessage.setText(R.string.title_notifications);
+                    Toast.makeText(EditActivity.this, String.format("Clicked %s", R.string.title_notifications), Toast
+                            .LENGTH_SHORT)
+                            .show();
+                    return true;
+            }
+            return false;
+        }
+
+    };
 
     private void returnHome() {
         Intent home_intent = new Intent(getApplicationContext(), MapMarkerActivity.class)
@@ -218,10 +252,10 @@ public class EditActivity extends GoogleApiClientActivity implements View.OnClic
                 startActivity(intent);
                 EditActivity.this.finish();
                 return true;
-            case R.id.action_quit:
-                int pid = android.os.Process.myPid();
-                android.os.Process.killProcess(pid);
-                System.exit(0);
+//            case R.id.action_quit:
+//                int pid = android.os.Process.myPid();
+//                android.os.Process.killProcess(pid);
+//                System.exit(0);
             default:
                 return super.onOptionsItemSelected(item);
         }

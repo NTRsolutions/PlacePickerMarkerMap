@@ -1,6 +1,9 @@
 package com.comp3617.placepickermarkermap;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.app.Activity;
@@ -11,9 +14,12 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.Places;
 import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
@@ -26,11 +32,13 @@ import com.google.android.gms.maps.model.LatLngBounds;
  * Allows the user to select locations using Google Places API
  */
 
-public class GooglePlacesActivity extends GoogleApiClientActivity implements View.OnClickListener {
+public class GooglePlacesActivity extends AppCompatActivity implements View.OnClickListener,
+        GoogleApiClient.OnConnectionFailedListener {
 
     private static final int PLACE_PICKER_REQUEST = 100;
     private static final int EDIT_REQUEST = 200;
     private final static String LOG_TAG = GooglePlacesActivity.class.getSimpleName();
+    private GoogleApiClient mGoogleApiClient;
 
     protected LocationDBHelper locationDBHelper;
     private TextView mName, mAddress, mGoogleId, mRemarks;
@@ -50,6 +58,9 @@ public class GooglePlacesActivity extends GoogleApiClientActivity implements Vie
         setContentView(R.layout.activity_main);
         Log.d(LOG_TAG, "onCreate()");
 
+        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
         mName = (TextView) findViewById(R.id.textView);
         mAddress = (TextView) findViewById(R.id.textView2);
         mGoogleId = (TextView) findViewById(R.id.textView3);
@@ -63,14 +74,39 @@ public class GooglePlacesActivity extends GoogleApiClientActivity implements Vie
         btnEdit.setOnClickListener(this);
         btnExit.setOnClickListener(this);
 
+        mGoogleApiClient = new GoogleApiClient
+                .Builder(this)
+                .addApi(Places.GEO_DATA_API)
+                .addApi(Places.PLACE_DETECTION_API)
+                .enableAutoManage(this, this)
+                .build();
+
         try {
             PlacePicker.IntentBuilder intentBuilder = new PlacePicker.IntentBuilder();
-            intentBuilder.setLatLngBounds(BOUNDS_WESTEND_VIEW);
+            //intentBuilder.setLatLngBounds(BOUNDS_WESTEND_VIEW);
             Intent intent = intentBuilder.build(GooglePlacesActivity.this);
             startActivityForResult(intent, PLACE_PICKER_REQUEST);
         } catch (GooglePlayServicesRepairableException | GooglePlayServicesNotAvailableException e) {
             Toast.makeText(this, "Google Play Services is not available.", Toast.LENGTH_LONG).show();
         }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mGoogleApiClient.connect();
+    }
+
+    @Override
+    protected void onStop() {
+        mGoogleApiClient.disconnect();
+        super.onStop();
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+        Toast.makeText(this, connectionResult.getErrorMessage() + "", Toast.LENGTH_LONG).show();
+        //Snackbar.make(this, connectionResult.getErrorMessage() + "", Snackbar.LENGTH_LONG).show();
     }
 
     @Override
@@ -86,6 +122,35 @@ public class GooglePlacesActivity extends GoogleApiClientActivity implements Vie
                 break;
         }
     }
+
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.navigation_home:
+                    //mTextMessage.setText(R.string.title_home);
+                    Toast.makeText(GooglePlacesActivity.this, String.format("Clicked %s", R.string.title_home), Toast
+                            .LENGTH_SHORT).show();
+                    return true;
+                case R.id.navigation_dashboard:
+                    //mTextMessage.setText(R.string.title_dashboard);
+                    Toast.makeText(GooglePlacesActivity.this, String.format("Clicked %s", R.string.title_dashboard), Toast
+                            .LENGTH_SHORT)
+                            .show();
+                    return true;
+                case R.id.navigation_notifications:
+                    //mTextMessage.setText(R.string.title_notifications);
+                    Toast.makeText(GooglePlacesActivity.this, String.format("Clicked %s", R.string.title_notifications), Toast
+                            .LENGTH_SHORT)
+                            .show();
+                    return true;
+            }
+            return false;
+        }
+
+    };
 
     private void editLocation() {
         Log.d(LOG_TAG, "Edit Clicked");
@@ -177,10 +242,10 @@ public class GooglePlacesActivity extends GoogleApiClientActivity implements Vie
                 startActivity(intent);
                 GooglePlacesActivity.this.finish();
                 return true;
-            case R.id.action_quit:
-                int pid = android.os.Process.myPid();
-                android.os.Process.killProcess(pid);
-                System.exit(0);
+//            case R.id.action_quit:
+//                int pid = android.os.Process.myPid();
+//                android.os.Process.killProcess(pid);
+//                System.exit(0);
             default:
                 return super.onOptionsItemSelected(item);
         }

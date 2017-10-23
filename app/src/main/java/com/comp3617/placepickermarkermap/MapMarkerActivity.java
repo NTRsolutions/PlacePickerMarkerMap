@@ -1,6 +1,8 @@
 package com.comp3617.placepickermarkermap;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -31,22 +33,54 @@ public class MapMarkerActivity extends AppCompatActivity implements OnMapReadyCa
     private final static String TAG = MapMarkerActivity.class.getSimpleName();
     private static final float ZOOM = 15f;
     private GoogleMap mGoogleMap;
-    private GoogleApiAvailability googleAPI;
-    private static final LatLng VANCOUVER = new LatLng(49.2847052, -123.1341435);
+    //private GoogleApiAvailability googleAPI;
+    private static final LatLng VANCOUVER = new LatLng(49.2829607, -123.1204715); // Art Gallery
+    //private static final LatLng VANCOUVER = new LatLng(49.2847052, -123.1341435); // Davie/Burrard
+
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.navigation_home:
+                    //mTextMessage.setText(R.string.title_home);
+                    Toast.makeText(MapMarkerActivity.this, String.format("Clicked %s", R.string.title_home), Toast.LENGTH_SHORT)
+                            .show();
+                    return true;
+                case R.id.navigation_dashboard:
+                    //mTextMessage.setText(R.string.title_dashboard);
+                    Toast.makeText(MapMarkerActivity.this, String.format("Clicked %s", R.string.title_dashboard), Toast.LENGTH_SHORT)
+                            .show();
+                    return true;
+                case R.id.navigation_notifications:
+                    //mTextMessage.setText(R.string.title_notifications);
+                    Toast.makeText(MapMarkerActivity.this, String.format("Clicked %s", R.string.title_notifications), Toast.LENGTH_SHORT)
+                            .show();
+                    return true;
+            }
+            return false;
+        }
+
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map_marker);
+
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mGoogleMap = googleMap;
         MapsInitializer.initialize(this);
-        //mGoogleMap.addMarker(new MarkerOptions().position(VANCOUVER).title("Vancouver Marker"));
+        //mGoogleMap.addMarker(new MarkerOptions().position(VANCOUVER).title("Vancouver Art Gallery"));
         //mGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(VANCOUVER));
         mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(VANCOUVER, ZOOM));
 
@@ -122,10 +156,10 @@ public class MapMarkerActivity extends AppCompatActivity implements OnMapReadyCa
                 startActivity(intent);
                 finish();
                 return true;
-            case R.id.action_quit:
-                int pid = android.os.Process.myPid();
-                android.os.Process.killProcess(pid);
-                System.exit(0);
+//            case R.id.action_quit:
+//                int pid = android.os.Process.myPid();
+//                android.os.Process.killProcess(pid);
+//                System.exit(0);
             default:
                 return super.onOptionsItemSelected(item);
         }

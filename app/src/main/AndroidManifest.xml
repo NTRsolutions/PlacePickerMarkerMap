@@ -38,10 +38,10 @@
             android:name="com.comp3617.placepickermarkermap.EditActivity"
             android:configChanges="orientation|screenSize|keyboardHidden">
         </activity>
-        <activity android:name="com.comp3617.placepickermarkermap.ListActivity">
+        <activity android:name="com.comp3617.placepickermarkermap.ListActivity"
             android:configChanges="orientation|screenSize|keyboardHidden">
         </activity>
-        <activity android:name="com.comp3617.placepickermarkermap.GooglePlacesActivity">
+        <activity android:name="com.comp3617.placepickermarkermap.GooglePlacesActivity"
             android:configChanges="orientation|screenSize|keyboardHidden">
         </activity>
     </application>
