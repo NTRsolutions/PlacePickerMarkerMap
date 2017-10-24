@@ -11,15 +11,18 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -44,24 +47,20 @@ public class MapMarkerActivity extends AppCompatActivity implements OnMapReadyCa
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    //mTextMessage.setText(R.string.title_home);
                     Toast.makeText(MapMarkerActivity.this, String.format("Clicked %s", R.string.title_home), Toast.LENGTH_SHORT)
                             .show();
                     return true;
                 case R.id.navigation_dashboard:
-                    //mTextMessage.setText(R.string.title_dashboard);
-                    Toast.makeText(MapMarkerActivity.this, String.format("Clicked %s", R.string.title_dashboard), Toast.LENGTH_SHORT)
+                     Toast.makeText(MapMarkerActivity.this, String.format("Clicked %s", R.string.title_dashboard), Toast.LENGTH_SHORT)
                             .show();
                     return true;
                 case R.id.navigation_notifications:
-                    //mTextMessage.setText(R.string.title_notifications);
                     Toast.makeText(MapMarkerActivity.this, String.format("Clicked %s", R.string.title_notifications), Toast.LENGTH_SHORT)
                             .show();
                     return true;
             }
             return false;
         }
-
     };
 
     @Override
@@ -72,7 +71,7 @@ public class MapMarkerActivity extends AppCompatActivity implements OnMapReadyCa
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
 
@@ -80,24 +79,42 @@ public class MapMarkerActivity extends AppCompatActivity implements OnMapReadyCa
     public void onMapReady(GoogleMap googleMap) {
         mGoogleMap = googleMap;
         MapsInitializer.initialize(this);
-        //mGoogleMap.addMarker(new MarkerOptions().position(VANCOUVER).title("Vancouver Art Gallery"));
-        //mGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(VANCOUVER));
-        mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(VANCOUVER, ZOOM));
-
         LocationDBHelper rs = LocationDBHelper.getInstance(MapMarkerActivity.this);
         final List<Location> markers = rs.getLocations();
-        for (int i = 0; i < markers.size(); i++) {
-            Log.d(TAG, markers.get(i).toString());
-            Double lat = markers.get(i).getLatitude();
-            Double lng = markers.get(i).getLongitude();
-            String theName = markers.get(i).getName();
-            String theSnip = markers.get(i).getRemarks();
-            LatLng thePosition = new LatLng(lat, lng);
-            mGoogleMap.addMarker(new MarkerOptions()
-                    .position(thePosition)
-                    .title(theName)
-                    .snippet(theSnip));
-        }
+        final List<LatLng> locations = new ArrayList<>();
+        mGoogleMap.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
+            @Override
+            public void onMapLoaded() {
+
+                for (int i = 0; i < markers.size(); i++) {
+                    Log.d(TAG, markers.get(i).toString());
+                    Double lat = markers.get(i).getLatitude();
+                    Double lng = markers.get(i).getLongitude();
+                    String theName = markers.get(i).getName();
+                    String theSnip = markers.get(i).getRemarks();
+                    LatLng thePosition = new LatLng(lat, lng);
+                    locations.add(thePosition);
+                    mGoogleMap.addMarker(new MarkerOptions()
+                            .position(thePosition)
+                            .title(theName)
+                            .snippet(theSnip));
+                }
+
+                //LatLngBound will cover all your markers on Google Maps
+                LatLngBounds.Builder builder = new LatLngBounds.Builder();
+                builder.include(locations.get(0)); //Taking Point A (First LatLng)
+                builder.include(locations.get(locations.size() - 1)); //Taking Point B (Second LatLng)
+                LatLngBounds bounds = builder.build();
+                CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, 200);
+                mGoogleMap.moveCamera(cu);
+                mGoogleMap.animateCamera(CameraUpdateFactory.zoomTo(14), 2000, null);
+            }
+        });
+        //mGoogleMap.addMarker(new MarkerOptions().position(VANCOUVER).title("Vancouver Art Gallery"));
+        //mGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(VANCOUVER));
+        //mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(VANCOUVER, ZOOM));
+
+
 
         mGoogleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
@@ -113,7 +130,7 @@ public class MapMarkerActivity extends AppCompatActivity implements OnMapReadyCa
                         editIntent.putExtra("remarks", markers.get(i).getRemarks());
                         Bundle b = new Bundle();
                         b.putDouble("latitude", markers.get(i).getLatitude());
-                        b.putDouble("longitude",markers.get(i).getLongitude());
+                        b.putDouble("longitude", markers.get(i).getLongitude());
                         editIntent.putExtras(b);
                         startActivity(editIntent);
                         finish();

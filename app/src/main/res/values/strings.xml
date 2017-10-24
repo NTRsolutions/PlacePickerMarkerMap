@@ -21,9 +21,7 @@
     <string name="txtDefault">N/A</string>
     <string name="txtEditInfo">"Click Marker Info Window to edit location"</string>
     <string name="txtException">Got an exception : </string>
-    <string name="google_api_key">AIzaSyAo34h_GmYpL0CXpRK19roTx9QRHfqKeZo</string>
     <string name="extra_google_api_key">AIzaSyBnInP2ObMJKcVPpgQIuda3dJ7Sahd9eNE</string>
-    <string name="your_google_api_key">your_google_api_key</string>
     <string name="editHint">Type note here</string>
     <integer name="charCount">24</integer>
 
