@@ -28,7 +28,7 @@ public class ListActivity extends AppCompatActivity implements AdapterView.OnIte
     private static final int REQUEST_CODE = 100;
     private ListView lvLocations;
 
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+    private final BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
         @Override
@@ -59,13 +59,13 @@ public class ListActivity extends AppCompatActivity implements AdapterView.OnIte
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
 
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         LocationDBHelper locationDBHelper = LocationDBHelper.getInstance(getApplicationContext());
         LocationAdapter locationAdapter = new LocationAdapter(ListActivity.this, locationDBHelper.getLocations());
 
-        lvLocations = (ListView) findViewById(R.id.lvLocations);
+        lvLocations = findViewById(R.id.lvLocations);
         lvLocations.setAdapter(locationAdapter);
         lvLocations.setOnItemClickListener(ListActivity.this);
     }

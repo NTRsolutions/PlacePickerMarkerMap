@@ -69,23 +69,23 @@ class LocationDBHelper extends SQLiteOpenHelper {
         db.execSQL(DB_TABLE_CREATE);
         Log.d(LOG_TAG, " onCreate(): " + DB_TABLE_NAME);
 
-        try {
-            ContentValues cv = new ContentValues();
-            cv.put(DB_COL_GOOGLE_ID, "ChIJwXz9f39xhlQRT3qxXAPDlbU");
-            cv.put(DB_COL_LATITUDE, 49.2829607);
-            cv.put(DB_COL_LONGITUDE, -123.1204715);
-            cv.put(DB_COL_NAME, "Vancouver Art Gallery");
-            cv.put(DB_COL_ADDRESS, "750 Hornby St, Vancouver,BC, V6Z2H7, Canada");
-            cv.put(DB_COL_REMARKS, "Free Speech!!");
-            db.insert(DB_TABLE_NAME, null, cv);
-            cv.clear();
-            Log.d(LOG_TAG, " Created : " + cv.toString());
-        } catch (SQLiteException e) {
-            Log.d(LOG_TAG, " Error: " + e.getLocalizedMessage());
-        }
-
-        db.setTransactionSuccessful();
-        db.endTransaction();
+//        try {
+//            ContentValues cv = new ContentValues();
+//            cv.put(DB_COL_GOOGLE_ID, "ChIJwXz9f39xhlQRT3qxXAPDlbU");
+//            cv.put(DB_COL_LATITUDE, 49.2829607);
+//            cv.put(DB_COL_LONGITUDE, -123.1204715);
+//            cv.put(DB_COL_NAME, "Vancouver Art Gallery");
+//            cv.put(DB_COL_ADDRESS, "750 Hornby St, Vancouver,BC, V6Z2H7, Canada");
+//            cv.put(DB_COL_REMARKS, "Free Speech!!");
+//            db.insert(DB_TABLE_NAME, null, cv);
+//            cv.clear();
+//            Log.d(LOG_TAG, " Created : " + cv.toString());
+//        } catch (SQLiteException e) {
+//            Log.d(LOG_TAG, " Error: " + e.getLocalizedMessage());
+//        }
+//
+//        db.setTransactionSuccessful();
+//        db.endTransaction();
     }
 
     public boolean dropTable(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -106,7 +106,7 @@ class LocationDBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
         db.beginTransaction();
         ContentValues cv = new ContentValues();
-        long id = -1;
+        long id;
         try {
             // The location might already exist
             //long localId = addOrUpdateLocation(location);
@@ -228,6 +228,10 @@ class LocationDBHelper extends SQLiteOpenHelper {
             Log.d(LOG_TAG, "Closed");
         }
         return Locations;
+    }
+
+    private static void defaultLocationVancouver(){
+
     }
 
 

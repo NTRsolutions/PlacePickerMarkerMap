@@ -17,8 +17,8 @@ import java.util.List;
 class LocationAdapter extends ArrayAdapter<Location> {
 
     private static final String LOG_TAG = LocationAdapter.class.getSimpleName();
-    private Context ctx;
-    private List<Location> locationList;
+    private final Context ctx;
+    private final List<Location> locationList;
 
     LocationAdapter(Context ctx, List<Location> locations) {
         super(ctx, 0, locations);
@@ -70,12 +70,14 @@ class LocationAdapter extends ArrayAdapter<Location> {
 	 * It makes the view faster and avoid finding the component
 	 * **********************************/
     private class ViewHolder {
-        TextView itemName, itemAddress, itemRemarks;
+        final TextView itemName;
+        final TextView itemAddress;
+        final TextView itemRemarks;
 
         private ViewHolder(View view){
-            itemName = (TextView) view.findViewById(R.id.tvName);
-            itemAddress = (TextView) view.findViewById(R.id.tvAddress);
-            itemRemarks = (TextView) view.findViewById(R.id.tvRemarks);
+            itemName = view.findViewById(R.id.tvName);
+            itemAddress = view.findViewById(R.id.tvAddress);
+            itemRemarks = view.findViewById(R.id.tvRemarks);
         }
     }
 }

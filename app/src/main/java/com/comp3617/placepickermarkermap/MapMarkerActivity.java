@@ -10,7 +10,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -36,11 +35,12 @@ public class MapMarkerActivity extends AppCompatActivity implements OnMapReadyCa
     private final static String TAG = MapMarkerActivity.class.getSimpleName();
     private static final float ZOOM = 15f;
     private GoogleMap mGoogleMap;
-    //private GoogleApiAvailability googleAPI;
-    private static final LatLng VANCOUVER = new LatLng(49.2829607, -123.1204715); // Art Gallery
+    private static final LatLng VANCOUVER_ART_GALLERY = new LatLng(49.2829607, -123.1204715); // Art Gallery
+    private static final String mArtGallery = "Vancouver Art Gallery";
+    private static final String mDefaultMsg = "Default Marker";
     //private static final LatLng VANCOUVER = new LatLng(49.2847052, -123.1341435); // Davie/Burrard
 
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+    private final BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
         @Override
@@ -51,7 +51,7 @@ public class MapMarkerActivity extends AppCompatActivity implements OnMapReadyCa
                             .show();
                     return true;
                 case R.id.navigation_dashboard:
-                     Toast.makeText(MapMarkerActivity.this, String.format("Clicked %s", R.string.title_dashboard), Toast.LENGTH_SHORT)
+                    Toast.makeText(MapMarkerActivity.this, String.format("Clicked %s", R.string.title_dashboard), Toast.LENGTH_SHORT)
                             .show();
                     return true;
                 case R.id.navigation_notifications:
@@ -81,39 +81,43 @@ public class MapMarkerActivity extends AppCompatActivity implements OnMapReadyCa
         MapsInitializer.initialize(this);
         LocationDBHelper rs = LocationDBHelper.getInstance(MapMarkerActivity.this);
         final List<Location> markers = rs.getLocations();
-        final List<LatLng> locations = new ArrayList<>();
+        //final List<LatLng> locations = new ArrayList<>();
         mGoogleMap.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
             @Override
             public void onMapLoaded() {
-
-                for (int i = 0; i < markers.size(); i++) {
-                    Log.d(TAG, markers.get(i).toString());
-                    Double lat = markers.get(i).getLatitude();
-                    Double lng = markers.get(i).getLongitude();
-                    String theName = markers.get(i).getName();
-                    String theSnip = markers.get(i).getRemarks();
-                    LatLng thePosition = new LatLng(lat, lng);
-                    locations.add(thePosition);
-                    mGoogleMap.addMarker(new MarkerOptions()
-                            .position(thePosition)
-                            .title(theName)
-                            .snippet(theSnip));
-                }
-
+                Log.d(TAG, markers.toString());
                 //LatLngBound will cover all your markers on Google Maps
                 LatLngBounds.Builder builder = new LatLngBounds.Builder();
-                builder.include(locations.get(0)); //Taking Point A (First LatLng)
-                builder.include(locations.get(locations.size() - 1)); //Taking Point B (Second LatLng)
-                LatLngBounds bounds = builder.build();
-                CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, 200);
-                mGoogleMap.moveCamera(cu);
-                mGoogleMap.animateCamera(CameraUpdateFactory.zoomTo(14), 2000, null);
+                if (!markers.isEmpty() || markers.size() > 0) {
+                    for (int i = 0; i < markers.size(); i++) {
+                        Log.d(TAG, markers.get(i).toString());
+                        Double lat = markers.get(i).getLatitude();
+                        Double lng = markers.get(i).getLongitude();
+                        String theName = markers.get(i).getName();
+                        String theSnip = markers.get(i).getRemarks();
+                        LatLng thePosition = new LatLng(lat, lng);
+                        //locations.add(thePosition);
+                        mGoogleMap.addMarker(new MarkerOptions()
+                                .position(thePosition)
+                                .title(theName)
+                                .snippet(theSnip));
+
+                        builder.include(thePosition);
+                    }
+                    LatLngBounds bounds = builder.build();
+                    //builder.include(locations.get(0)); //Taking Point A (First LatLng)
+                    //builder.include(locations.get(locations.size() - 1)); //Taking Point B (Second LatLng)
+                    mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 200));
+                    mGoogleMap.animateCamera(CameraUpdateFactory.zoomTo(ZOOM), 2000, null);
+
+                } else {
+                    mGoogleMap.addMarker(new MarkerOptions().position(VANCOUVER_ART_GALLERY).title(mArtGallery).snippet
+                            (mDefaultMsg));
+                    //mGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(VANCOUVER_ART_GALLERY));
+                    mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(VANCOUVER_ART_GALLERY, ZOOM));
+                }
             }
         });
-        //mGoogleMap.addMarker(new MarkerOptions().position(VANCOUVER).title("Vancouver Art Gallery"));
-        //mGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(VANCOUVER));
-        //mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(VANCOUVER, ZOOM));
-
 
 
         mGoogleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {

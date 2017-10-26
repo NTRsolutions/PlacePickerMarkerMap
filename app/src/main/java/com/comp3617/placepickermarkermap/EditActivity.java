@@ -50,18 +50,18 @@ public class EditActivity extends GoogleApiClientActivity implements View.OnClic
         setTitle("Modify Record");
         setContentView(R.layout.activity_edit);
 
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-        mName = (TextView) findViewById(R.id.textView);
-        mAddress = (TextView) findViewById(R.id.textView2);
-        mGoogleId = (TextView) findViewById(R.id.textView3);
-        mRemarks = (EditText) findViewById(R.id.editText);
+        mName = findViewById(R.id.textView);
+        mAddress = findViewById(R.id.textView2);
+        mGoogleId = findViewById(R.id.textView3);
+        mRemarks = findViewById(R.id.editText);
 
-        btnSave = (Button) findViewById(R.id.buttonSave);
-        btnDelete = (Button) findViewById(R.id.buttonDelete);
-        btnUpdate = (Button) findViewById(R.id.buttonUpdate);
-        btnExit = (Button) findViewById(R.id.buttonExit);
+        btnSave = findViewById(R.id.buttonSave);
+        btnDelete = findViewById(R.id.buttonDelete);
+        btnUpdate = findViewById(R.id.buttonUpdate);
+        btnExit = findViewById(R.id.buttonExit);
 
         btnSave.setOnClickListener(this);
         btnDelete.setOnClickListener(this);
@@ -103,7 +103,6 @@ public class EditActivity extends GoogleApiClientActivity implements View.OnClic
                 if (TextUtils.isEmpty(s.toString().trim())) {
                     new AlertDialog.Builder(EditActivity.this).setTitle("Character minimum required").setMessage
                             (minMsg).setPositiveButton(android.R.string.ok, null).show();
-                    return;
                 }
             }
         });

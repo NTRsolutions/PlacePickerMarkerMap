@@ -40,7 +40,7 @@ public class GooglePlacesActivity extends AppCompatActivity implements View.OnCl
     private final static String LOG_TAG = GooglePlacesActivity.class.getSimpleName();
     private GoogleApiClient mGoogleApiClient;
 
-    protected LocationDBHelper locationDBHelper;
+    private LocationDBHelper locationDBHelper;
     private TextView mName, mAddress, mGoogleId, mRemarks;
     private Button btnEdit, btnExit;
 
@@ -58,18 +58,18 @@ public class GooglePlacesActivity extends AppCompatActivity implements View.OnCl
         setContentView(R.layout.activity_main);
         Log.d(LOG_TAG, "onCreate()");
 
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-        mName = (TextView) findViewById(R.id.textView);
-        mAddress = (TextView) findViewById(R.id.textView2);
-        mGoogleId = (TextView) findViewById(R.id.textView3);
-        mRemarks = (TextView) findViewById(R.id.textView4);
+        mName = findViewById(R.id.textView);
+        mAddress = findViewById(R.id.textView2);
+        mGoogleId = findViewById(R.id.textView3);
+        mRemarks = findViewById(R.id.textView4);
         //mLatitude = (TextView) findViewById(R.id.textLat);
         //mLongitude = (TextView) findViewById(R.id.textLng);
 
-        btnEdit = (Button) findViewById(R.id.buttonEdit);
-        btnExit = (Button) findViewById(R.id.buttonExit);
+        btnEdit = findViewById(R.id.buttonEdit);
+        btnExit = findViewById(R.id.buttonExit);
 
         btnEdit.setOnClickListener(this);
         btnExit.setOnClickListener(this);
@@ -207,7 +207,7 @@ public class GooglePlacesActivity extends AppCompatActivity implements View.OnCl
     private String getLocationRemarksWithGoogleId(String googleId) {
         locationDBHelper = LocationDBHelper.getInstance(getApplicationContext());
         Log.d(LOG_TAG, "locationDBHelper: " + googleId);
-        String result = null;
+        String result;
         if (locationDBHelper.doesLocationExist(googleId)) {
             result = locationDBHelper.getLocationByGoogleId(googleId);
         } else

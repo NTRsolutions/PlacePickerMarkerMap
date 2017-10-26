@@ -108,7 +108,6 @@ public class GoogleApiClientActivity extends AppCompatActivity
 
         if (mResolvingError) {
             // Already attempting to resolve an error.
-            return;
         } else if (result.hasResolution()) {
             try {
                 mResolvingError = true;
@@ -149,6 +148,7 @@ public class GoogleApiClientActivity extends AppCompatActivity
         public ErrorDialogFragment() {
         }
 
+        @NonNull
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             // Get the error code and retrieve the appropriate dialog
