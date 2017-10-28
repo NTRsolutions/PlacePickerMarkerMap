@@ -130,21 +130,19 @@ public class GooglePlacesActivity extends AppCompatActivity implements View.OnCl
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    //mTextMessage.setText(R.string.title_home);
-                    Toast.makeText(GooglePlacesActivity.this, String.format("Clicked %s", R.string.title_home), Toast
-                            .LENGTH_SHORT).show();
+                    Intent intent = new Intent(GooglePlacesActivity.this, MapMarkerActivity.class);
+                    startActivity(intent);
+                    GooglePlacesActivity.this.finish();
                     return true;
-                case R.id.navigation_dashboard:
-                    //mTextMessage.setText(R.string.title_dashboard);
-                    Toast.makeText(GooglePlacesActivity.this, String.format("Clicked %s", R.string.title_dashboard), Toast
-                            .LENGTH_SHORT)
-                            .show();
+                case R.id.navigation_location_list:
+                    intent = new Intent(GooglePlacesActivity.this, ListActivity.class);
+                    startActivity(intent);
+                    GooglePlacesActivity.this.finish();
                     return true;
-                case R.id.navigation_notifications:
-                    //mTextMessage.setText(R.string.title_notifications);
-                    Toast.makeText(GooglePlacesActivity.this, String.format("Clicked %s", R.string.title_notifications), Toast
-                            .LENGTH_SHORT)
-                            .show();
+                case R.id.navigation_location_search:
+                    intent = new Intent(GooglePlacesActivity.this, GooglePlacesActivity.class);
+                    startActivity(intent);
+                    GooglePlacesActivity.this.finish();
                     return true;
             }
             return false;
@@ -224,9 +222,9 @@ public class GooglePlacesActivity extends AppCompatActivity implements View.OnCl
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_settings:
-                Toast.makeText(this, "You have selected Settings", Toast.LENGTH_SHORT).show();
-                return true;
+//            case R.id.action_settings:
+//                Toast.makeText(this, "You have selected Settings", Toast.LENGTH_SHORT).show();
+//                return true;
             case R.id.action_list:
                 Intent intent = new Intent(GooglePlacesActivity.this, ListActivity.class);
                 startActivity(intent);

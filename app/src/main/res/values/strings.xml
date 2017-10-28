@@ -28,4 +28,6 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string name="title_locations_list">Locations List</string>
+    <string name="title_location_search">Google Places API</string>
 </resources>

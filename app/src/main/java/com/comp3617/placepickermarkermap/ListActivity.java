@@ -35,18 +35,18 @@ public class ListActivity extends AppCompatActivity implements AdapterView.OnIte
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    //mTextMessage.setText(R.string.title_home);
-                    Toast.makeText(ListActivity.this, String.format("Clicked %s", R.string.title_home), Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(ListActivity.this, MapMarkerActivity.class);
+                    startActivity(intent);
+                    ListActivity.this.finish();
                     return true;
-                case R.id.navigation_dashboard:
-                    //mTextMessage.setText(R.string.title_dashboard);
-                    Toast.makeText(ListActivity.this, String.format("Clicked %s", R.string.title_dashboard), Toast.LENGTH_SHORT)
+                case R.id.navigation_location_list:
+                    Toast.makeText(ListActivity.this, String.format("Clicked %s", R.string.action_list), Toast.LENGTH_SHORT)
                             .show();
-                    return true;
-                case R.id.navigation_notifications:
-                    //mTextMessage.setText(R.string.title_notifications);
-                    Toast.makeText(ListActivity.this, String.format("Clicked %s", R.string.title_notifications), Toast.LENGTH_SHORT)
-                            .show();
+                    return false;
+                case R.id.navigation_location_search:
+                    intent = new Intent(ListActivity.this, GooglePlacesActivity.class);
+                    startActivity(intent);
+                    ListActivity.this.finish();
                     return true;
             }
             return false;
@@ -126,9 +126,9 @@ public class ListActivity extends AppCompatActivity implements AdapterView.OnIte
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_settings:
-                Toast.makeText(this, "You have selected Settngs", Toast.LENGTH_SHORT).show();
-                return true;
+//            case R.id.action_settings:
+//                Toast.makeText(this, "You have selected Settngs", Toast.LENGTH_SHORT).show();
+//                return true;
             case R.id.action_list:
                 Toast.makeText(this, "You have selected ListActivity", Toast.LENGTH_SHORT).show();
                 return false;

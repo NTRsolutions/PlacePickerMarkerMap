@@ -49,15 +49,17 @@ public class MapMarkerActivity extends AppCompatActivity implements OnMapReadyCa
                 case R.id.navigation_home:
                     Toast.makeText(MapMarkerActivity.this, String.format("Clicked %s", R.string.title_home), Toast.LENGTH_SHORT)
                             .show();
-                    return true;
-                case R.id.navigation_dashboard:
-                    Toast.makeText(MapMarkerActivity.this, String.format("Clicked %s", R.string.title_dashboard), Toast.LENGTH_SHORT)
-                            .show();
-                    return true;
-                case R.id.navigation_notifications:
-                    Toast.makeText(MapMarkerActivity.this, String.format("Clicked %s", R.string.title_notifications), Toast.LENGTH_SHORT)
-                            .show();
-                    return true;
+                    break;
+                case R.id.navigation_location_list:
+                    Intent intent = new Intent(MapMarkerActivity.this, ListActivity.class);
+                    startActivity(intent);
+                    MapMarkerActivity.this.finish();
+                    break;
+                case R.id.navigation_location_search:
+                    intent = new Intent(MapMarkerActivity.this, GooglePlacesActivity.class);
+                    startActivity(intent);
+                    MapMarkerActivity.this.finish();
+                    break;
             }
             return false;
         }
@@ -161,9 +163,9 @@ public class MapMarkerActivity extends AppCompatActivity implements OnMapReadyCa
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_settings:
-                Toast.makeText(this, "You have selected Settings", Toast.LENGTH_SHORT).show();
-                return true;
+//            case R.id.action_settings:
+//                Toast.makeText(this, "You have selected Settings", Toast.LENGTH_SHORT).show();
+//                return true;
             case R.id.action_list:
                 Intent intent = new Intent(MapMarkerActivity.this, ListActivity.class);
                 startActivity(intent);
