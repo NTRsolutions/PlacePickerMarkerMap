@@ -83,9 +83,9 @@ class LocationDBHelper extends SQLiteOpenHelper {
 //        } catch (SQLiteException e) {
 //            Log.d(LOG_TAG, " Error: " + e.getLocalizedMessage());
 //        }
-//
-//        db.setTransactionSuccessful();
-//        db.endTransaction();
+
+        db.setTransactionSuccessful();
+        db.endTransaction();
     }
 
     public boolean dropTable(SQLiteDatabase db, int oldVersion, int newVersion) {
