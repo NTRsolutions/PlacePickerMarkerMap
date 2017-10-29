@@ -139,19 +139,22 @@ public class EditActivity extends GoogleApiClientActivity implements View.OnClic
                     Intent intent = new Intent(getApplicationContext(), MapMarkerActivity.class);
                     startActivity(intent);
                     EditActivity.this.finish();
-                    return true;
+                    break;
+                    //return true;
                 case R.id.navigation_location_list:
                     intent = new Intent(EditActivity.this, ListActivity.class);
                     startActivity(intent);
                     EditActivity.this.finish();
-                    return true;
+                    break;
+                    //return true;
                 case R.id.navigation_location_search:
                     intent = new Intent(EditActivity.this, GooglePlacesActivity.class);
                     startActivity(intent);
                     EditActivity.this.finish();
-                    return true;
+                    break;
+                    //return true;
             }
-            return false;
+            return true;
         }
 
     };

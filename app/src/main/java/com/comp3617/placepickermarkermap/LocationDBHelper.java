@@ -66,9 +66,17 @@ class LocationDBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.beginTransaction();
         Log.d(LOG_TAG, "onCreate():" + DB_TABLE_CREATE);
-        db.execSQL(DB_TABLE_CREATE);
-        Log.d(LOG_TAG, " onCreate(): " + DB_TABLE_NAME);
+        try {
+            db.execSQL(DB_TABLE_CREATE);
+            Log.d(LOG_TAG, " onCreate(): " + DB_TABLE_NAME);
+            db.setTransactionSuccessful();
+        } catch (SQLiteException e) {
+            Log.d(LOG_TAG, " Error: " + e.getLocalizedMessage());
+        } finally {
+            db.endTransaction();
+        }
 
+//        }
 //        try {
 //            ContentValues cv = new ContentValues();
 //            cv.put(DB_COL_GOOGLE_ID, "ChIJwXz9f39xhlQRT3qxXAPDlbU");
@@ -84,8 +92,6 @@ class LocationDBHelper extends SQLiteOpenHelper {
 //            Log.d(LOG_TAG, " Error: " + e.getLocalizedMessage());
 //        }
 //
-//        db.setTransactionSuccessful();
-//        db.endTransaction();
     }
 
     public boolean dropTable(SQLiteDatabase db, int oldVersion, int newVersion) {

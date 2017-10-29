@@ -133,19 +133,22 @@ public class GooglePlacesActivity extends AppCompatActivity implements View.OnCl
                     Intent intent = new Intent(GooglePlacesActivity.this, MapMarkerActivity.class);
                     startActivity(intent);
                     GooglePlacesActivity.this.finish();
-                    return true;
+                    break;
+                    //return true;
                 case R.id.navigation_location_list:
                     intent = new Intent(GooglePlacesActivity.this, ListActivity.class);
                     startActivity(intent);
                     GooglePlacesActivity.this.finish();
-                    return true;
+                    break;
+                    //return true;
                 case R.id.navigation_location_search:
                     intent = new Intent(GooglePlacesActivity.this, GooglePlacesActivity.class);
                     startActivity(intent);
                     GooglePlacesActivity.this.finish();
-                    return true;
+                    break;
+                    //return true;
             }
-            return false;
+            return true;
         }
 
     };

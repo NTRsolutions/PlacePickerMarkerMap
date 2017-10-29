@@ -61,7 +61,7 @@ public class MapMarkerActivity extends AppCompatActivity implements OnMapReadyCa
                     MapMarkerActivity.this.finish();
                     break;
             }
-            return false;
+            return true;
         }
     };
 

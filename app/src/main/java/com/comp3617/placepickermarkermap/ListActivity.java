@@ -38,18 +38,22 @@ public class ListActivity extends AppCompatActivity implements AdapterView.OnIte
                     Intent intent = new Intent(ListActivity.this, MapMarkerActivity.class);
                     startActivity(intent);
                     ListActivity.this.finish();
-                    return true;
+                    break;
+                    //return true;
                 case R.id.navigation_location_list:
                     Toast.makeText(ListActivity.this, String.format("Clicked %s", R.string.action_list), Toast.LENGTH_SHORT)
                             .show();
-                    return false;
+                    break;
+                    //return false;
                 case R.id.navigation_location_search:
                     intent = new Intent(ListActivity.this, GooglePlacesActivity.class);
                     startActivity(intent);
                     ListActivity.this.finish();
-                    return true;
+                    break;
+                    //return true;
             }
-            return false;
+            return true;
+            //return false;
         }
 
     };
@@ -127,7 +131,7 @@ public class ListActivity extends AppCompatActivity implements AdapterView.OnIte
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
 //            case R.id.action_settings:
-//                Toast.makeText(this, "You have selected Settngs", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "You have selected Settings", Toast.LENGTH_SHORT).show();
 //                return true;
             case R.id.action_list:
                 Toast.makeText(this, "You have selected ListActivity", Toast.LENGTH_SHORT).show();
