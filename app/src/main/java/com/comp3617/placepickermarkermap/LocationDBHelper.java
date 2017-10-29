@@ -236,11 +236,6 @@ class LocationDBHelper extends SQLiteOpenHelper {
         return Locations;
     }
 
-    private static void defaultLocationVancouver(){
-
-    }
-
-
     private static Location getLocationFromCursor(Cursor c) {
         if ((c == null) || (c.getCount() == 0))
             return null;
@@ -363,7 +358,5 @@ class LocationDBHelper extends SQLiteOpenHelper {
         return db.delete(DB_TABLE_NAME, DB_COL_ID + "=" + rowId, null) > 0;
     }
 
-    public void  displayData(){
-    }
 }
 

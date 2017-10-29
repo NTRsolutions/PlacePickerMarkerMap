@@ -14,6 +14,7 @@
     <string name="btnSave"> Save </string>
     <string name="btnDelete"> Delete </string>
     <string name="txtEditLocation">Edit Location </string>
+    <string name="no_added_locations">No Added Locations</string>
     <string name="txtLocation">Location</string>
     <string name="txtName">Name</string>
     <string name="txtAddress">Address</string>

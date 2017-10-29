@@ -11,7 +11,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
@@ -39,21 +41,17 @@ public class ListActivity extends AppCompatActivity implements AdapterView.OnIte
                     startActivity(intent);
                     ListActivity.this.finish();
                     break;
-                    //return true;
                 case R.id.navigation_location_list:
                     Toast.makeText(ListActivity.this, String.format("Clicked %s", R.string.action_list), Toast.LENGTH_SHORT)
                             .show();
                     break;
-                    //return false;
                 case R.id.navigation_location_search:
                     intent = new Intent(ListActivity.this, GooglePlacesActivity.class);
                     startActivity(intent);
                     ListActivity.this.finish();
                     break;
-                    //return true;
             }
             return true;
-            //return false;
         }
 
     };
@@ -69,9 +67,16 @@ public class ListActivity extends AppCompatActivity implements AdapterView.OnIte
         LocationDBHelper locationDBHelper = LocationDBHelper.getInstance(getApplicationContext());
         LocationAdapter locationAdapter = new LocationAdapter(ListActivity.this, locationDBHelper.getLocations());
 
-        lvLocations = findViewById(R.id.lvLocations);
-        lvLocations.setAdapter(locationAdapter);
-        lvLocations.setOnItemClickListener(ListActivity.this);
+        if (locationAdapter.isEmpty() || locationAdapter.getCount()==0) {
+            TextView tvLocal = findViewById(R.id.tvEmpty);
+            tvLocal.setVisibility(View.VISIBLE);
+//            Toast.makeText(ListActivity.this, String.format("Count: %s", locationAdapter.getCount()), Toast
+//                    .LENGTH_SHORT).show();
+        } else {
+            lvLocations = findViewById(R.id.lvLocations);
+            lvLocations.setAdapter(locationAdapter);
+            lvLocations.setOnItemClickListener(ListActivity.this);
+        }
     }
 
     @Override
