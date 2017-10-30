@@ -87,7 +87,6 @@ public class MapMarkerActivity extends AppCompatActivity implements OnMapReadyCa
         mGoogleMap.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
             @Override
             public void onMapLoaded() {
-                Log.d(TAG, markers.toString());
                 //LatLngBound will cover all your markers on Google Maps
                 LatLngBounds.Builder builder = new LatLngBounds.Builder();
                 if (!markers.isEmpty() || markers.size() > 0) {
@@ -98,7 +97,6 @@ public class MapMarkerActivity extends AppCompatActivity implements OnMapReadyCa
                         String theName = markers.get(i).getName();
                         String theSnip = markers.get(i).getRemarks();
                         LatLng thePosition = new LatLng(lat, lng);
-                        //locations.add(thePosition);
                         mGoogleMap.addMarker(new MarkerOptions()
                                 .position(thePosition)
                                 .title(theName)
@@ -107,8 +105,6 @@ public class MapMarkerActivity extends AppCompatActivity implements OnMapReadyCa
                         builder.include(thePosition);
                     }
                     LatLngBounds bounds = builder.build();
-                    //builder.include(locations.get(0)); //Taking Point A (First LatLng)
-                    //builder.include(locations.get(locations.size() - 1)); //Taking Point B (Second LatLng)
                     mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 200));
                     mGoogleMap.animateCamera(CameraUpdateFactory.zoomTo(ZOOM), 2000, null);
 
@@ -126,7 +122,6 @@ public class MapMarkerActivity extends AppCompatActivity implements OnMapReadyCa
             @Override
             public void onInfoWindowClick(Marker marker) {
                 for (int i = 0; i < markers.size(); i++) {
-                    Log.d(TAG, markers.get(i).toString());
                     LatLng editPosition = new LatLng(markers.get(i).getLatitude(), markers.get(i).getLongitude());
                     if (marker.getPosition().equals(editPosition)) {
                         Intent editIntent = new Intent(MapMarkerActivity.this, EditActivity.class);
