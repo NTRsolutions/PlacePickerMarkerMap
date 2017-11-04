@@ -101,7 +101,6 @@ public class MapMarkerActivity extends AppCompatActivity implements OnMapReadyCa
                                 .position(thePosition)
                                 .title(theName)
                                 .snippet(theSnip));
-
                         builder.include(thePosition);
                     }
                     LatLngBounds bounds = builder.build();

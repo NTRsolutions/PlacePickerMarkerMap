@@ -84,10 +84,7 @@ public class ListActivity extends AppCompatActivity implements AdapterView.OnIte
         ArrayAdapter<Location> locationAdapter = (LocationAdapter) lvLocations.getAdapter();
         Location thisLocation = locationAdapter.getItem(position);
         if (thisLocation != null) {
-            //Toast.makeText(ListActivity.this, String.format("Clicked %s", thisLocation.getGoogleId()), Toast.LENGTH_SHORT).show();
             Intent editIntent = new Intent(ListActivity.this, EditActivity.class);
-            //editIntent.putExtra("com.comp3617.placepickermarkermap.scooch_locations.db", thisLocation);
-            //startActivityForResult(editIntent, REQUEST_CODE );
             editIntent.putExtra("google_id", thisLocation.getGoogleId());
             editIntent.putExtra("name", thisLocation.getName());
             editIntent.putExtra("address", thisLocation.getAddress());
@@ -114,7 +111,6 @@ public class ListActivity extends AppCompatActivity implements AdapterView.OnIte
             bindListViewToLocation();
         } else
             Log.d(LOG_TAG, "Not OK:");
-            //Toast.makeText(ListActivity.this, String.format("Clicked %s", data.toString()), Toast.LENGTH_SHORT).show();
             super.onActivityResult(requestCode, resultCode, data);
     }
 
