@@ -36,8 +36,8 @@ public class MapMarkerActivity extends AppCompatActivity implements OnMapReadyCa
     private static final float ZOOM = 15f;
     private GoogleMap mGoogleMap;
     private static final LatLng VANCOUVER_ART_GALLERY = new LatLng(49.2829607, -123.1204715); // Art Gallery
-    private static final String mArtGallery = "Vancouver Art Gallery";
-    private static final String mDefaultMsg = "Default Marker";
+    private static final String mArtGallery = "Vancouver Art Gallery - Default Marker";
+    private static final String mDefaultMsg = "Click Google Places API to select location";
     //private static final LatLng VANCOUVER = new LatLng(49.2847052, -123.1341435); // Davie/Burrard
 
     private final BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
